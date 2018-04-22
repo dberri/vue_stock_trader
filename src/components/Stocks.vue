@@ -1,7 +1,7 @@
 <template>
 
 	<div class="row">
-		<stock-card></stock-card>
+		<stock-card v-for="stock in market" :stock="stock"></stock-card>
 	</div>
 	
 </template>
@@ -11,6 +11,11 @@ import StockCard from './StockCard.vue'
 export default {
 	components: {
 		'stock-card': StockCard
+	},
+	computed: {
+		market() {
+			return this.$store.getters.market;
+		}
 	}
 
 }
