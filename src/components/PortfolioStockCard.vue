@@ -1,38 +1,69 @@
 <template>
 	<transition name="fade" method="out-in">
-		<div class="col-xs-4">
-			<div class="panel panel-info">
-				<div class="panel-heading">
+		<div class="col-xs-12 col-sm-6 col-md-4">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h3 class="panel-title">
 					{{ stock.name }}
-					<small class="pull-right">{{ stock.qty }}</small>
+					<small class="pull-right">Price: US$ {{ stock.price }} | Quantity: {{ stock.quantity }}</small>
+				</h3>
+			</div>
+			<div class="panel-body">
+				<div class="pull-left">
+					<input 
+						type="number"
+						class="form-control"
+						:class="{danger: insufficientQuantity}"
+						v-model="quantity" />
 				</div>
-				<div class="panel-body">
-					<p>Sell stocks</p>
-					<div class="row">
-						<div class="col-xs-9">
-							<input type="number" class="form-control" v-model="qty" min="0">
-						</div>
-						<div class="col-xs-3">
-							<button type="button" @click="removeFromMyStocks({name: stock.name, qty: qty, price: stock.price})" class="btn btn-sm btn-danger">Sell</button>
-						</div>				
-					</div>
+				<div class="pull-right">
+					<button 
+						type="button"
+						class="btn btn-sm btn-success"
+						:disabled="insufficientQuantity || quantity <= 0"
+						@click="sellStock">{{ insufficientQuantity ? 'Not enough' : 'Sell'}}</button>
 				</div>
 			</div>
 		</div>
+	</div>
 	</transition>
 </template>
 
+<style scoped>
+	.danger {
+		border: 1px solid red;
+	}
+</style>
+
 <script>
-import { mapActions } from 'vuex';
+import {mapActions} from 'vuex';
+
 export default {
 	props: ['stock'],
 	data() {
 		return {
-			qty: 0
+			quantity: 0
 		}
 	},
-	methods: mapActions([
-		'removeFromMyStocks'
-		])
+	computed: {
+		insufficientQuantity() {
+			return this.quantity > this.stock.quantity;
+		}
+	},
+	methods: {
+		...mapActions({
+			placeSellOrder: 'sellStock'
+		}),
+		sellStock() {
+
+		const order = {
+			stockId: this.stock.id,
+			stockPrice: this.stock.price,
+			quantity: this.quantity
+		};
+		this.placeSellOrder(order);
+		this.quantity = 0;
+	}
+}
 }
 </script>
