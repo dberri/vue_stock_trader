@@ -1,6 +1,7 @@
 import Summary from './components/Summary.vue';
 import Portfolio from './components/Portfolio.vue';
 import Stocks from './components/Stocks.vue';
+import Balance from './components/Balance.vue';
 
 export const routes = [
 	{
@@ -22,6 +23,13 @@ export const routes = [
 		name: 'stocks',
 		components: {
 			default: Stocks
+		}
+	},
+	{
+		path: '/balance',
+		name: 'balance',
+		components: {
+			default: Balance
 		}
 	}
 ]

@@ -18,6 +18,7 @@
         <ul class="nav navbar-nav">
          <router-link active-class="active" tag="li" to="/portfolio"><a>Portfolio <span class="sr-only">(current)</span></a></router-link>
          <router-link active-class="active" tag="li" to="/stocks"><a>Stocks <span class="sr-only">(current)</span></a></router-link>
+         <router-link active-class="active" tag="li" to="/balance"><a>Balance <span class="sr-only">(current)</span></a></router-link>
        </ul>
 
        <ul class="nav navbar-nav navbar-right">
