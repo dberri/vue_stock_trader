@@ -1,36 +1,64 @@
 <template>
 	<div class="col-xs-12 col-sm-6 col-md-4">
-		<div class="panel panel-info">
+		<div class="panel panel-success">
 			<div class="panel-heading">
-			{{ stock.name }}
-			<small class="pull-right">{{ stock.qty }}</small>
-		</div>
+				<h3 class="panel-title">
+					{{ stock.name }}
+					<small class="pull-right">Price: US$ {{ stock.price }}</small>
+				</h3>
+			</div>
 			<div class="panel-body">
-				<p>Buy stocks</p>
-				<div class="row">
-					<div class="col-xs-9">
-						<input type="number" class="form-control" v-model="qty" min="0">
-					</div>
-					<div class="col-xs-3">
-						<button type="button" @click="insertIntoMyStocks({name: stock.name, qty: qty, price: stock.price})" class="btn btn-sm btn-success">Buy</button>
-					</div>				
+				<div class="pull-left">
+					<input 
+					type="number"
+					class="form-control"
+					:class="{'danger': insufficientFunds}"
+					v-model="quantity" />
+				</div>
+				<div class="pull-right">
+					<button 
+					type="button"
+					class="btn btn-sm btn-success"
+					:disabled="insufficientFunds || quantity <= 0"
+					@click="buyStock">{{ insufficientFunds ? 'Insufficient Funds' : 'Buy' }}</button>
 				</div>
 			</div>
 		</div>
 	</div>
 </template>
 
+<style scoped>
+	.danger {
+		border: 1px solid red;
+	}
+</style>
+
 <script>
-import { mapActions } from 'vuex'
 export default {
 	props: ['stock'],
 	data() {
 		return {
-			qty: 0
+			quantity: 0
 		}
 	},
-	methods: mapActions([
-	        'insertIntoMyStocks',
-	        ]),
+	computed: {
+		funds() {
+			return this.$store.getters.funds;
+		},
+		insufficientFunds() {
+			return this.quantity * this.stock.price > this.funds
+		}
+	},
+	methods: {
+		buyStock() {
+			const order = {
+				stockId: this.stock.id,
+				stockPrice: this.stock.price,
+				quantity: this.quantity
+			};
+			this.$store.dispatch('buyStock', order);
+			this.quantity = 0;
+		}
+	}
 }
 </script>
