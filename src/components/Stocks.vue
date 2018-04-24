@@ -1,7 +1,7 @@
 <template>
 
 	<div class="row">
-		<stock-card v-for="stock in market" :stock="stock"></stock-card>
+		<stock-card v-for="stock in stocks" :stock="stock"></stock-card>
 	</div>
 	
 </template>
@@ -13,8 +13,8 @@ export default {
 		'stock-card': StockCard
 	},
 	computed: {
-		market() {
-			return this.$store.getters.market;
+		stocks() {
+			return this.$store.getters.stocks
 		}
 	}
 
