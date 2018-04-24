@@ -1,8 +1,8 @@
 <template>
 	<div class="summary">
 		<h1>Trade or view your portfolio</h1>
-		<p>You may Save & Load your Data</p>
-		<p>Click on 'End Day' to begin a new Day!</p>
+		<h6>You may Save & Load your Data</h6>
+		<h6>Click on 'End Day' to begin a new Day!</h6>
 		<hr>
 		<h4><b>Your funds: {{ funds }}</b></h4>
 	</div>
