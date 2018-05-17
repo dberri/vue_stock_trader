@@ -2,6 +2,8 @@
 
 Using Vue-Router and VueX to build a stock trader application
 
+[Demo](http://vuejs-st-deploy.s3-website-sa-east-1.amazonaws.com)
+
 # vue-cli
 
 > A Vue.js project
